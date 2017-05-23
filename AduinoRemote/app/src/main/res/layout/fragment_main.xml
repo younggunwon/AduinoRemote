@@ -11,9 +11,28 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ㅁㄴㅇㄹㅇㅁㄴㄹㅇㄴㅇㄴㄻㄴㅇㄹ"/>
+            android:textSize="25sp"
+            android:text="1. 주변 기기를 검색한다.
+                        \n\n2. 기기를 선택하여 연결한다.
+                        \n\n3. 리모콘 전송 데이터를 설정한 후 조종한다."/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:background="#92FFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="연결 가능한 기기"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+
+        <ListView
+            android:id="@+id/lv_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -22,9 +41,9 @@
         android:layout_height="wrap_content"
         app:backgroundTint="?attr/colorPrimary"
         app:srcCompat="?android:attr/actionModeWebSearchDrawable"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd ="true"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginEnd="40dp" />
 
 </RelativeLayout>
