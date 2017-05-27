@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
@@ -43,6 +40,7 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
     BluetoothAdapter mBluetoothAdapter;
     ListView lv_find;
     ArrayAdapter<String> mArrayAdapter;
+    OnRemoteStartListener _startRemoteListener;
 
     @Nullable
     @Override
@@ -85,8 +83,7 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                String s = ((TextView)view).getText().toString();
-               BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(s.substring(s.length() - 17));
-               SelectDialog dialog = new SelectDialog(getActivity(), device);
+               SelectDialog dialog = new SelectDialog(getActivity(), s.substring(s.length() - 17));
                dialog.setOnDismissListener(MainFragment.this);
                dialog.show();
            }
@@ -104,16 +101,23 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
        });
    }
 
-   void startRemote(int code, BluetoothDevice device) {
+   void startRemote(int $code, String $address) {
        Fragment fragment;
-       switch (code) {
+       switch ($code) {
            case 0 :fragment = new RobotFragment(); break;
            case 1 :fragment = new RobotFragment(); break;
            case 2 :fragment = new RobotFragment(); break;
            case 3 :fragment = new RobotFragment(); break;
            default:fragment = new RobotFragment(); break;
        }
-       new ConnectThread(code, device).start();
+       if(_startRemoteListener == null) { } else {
+           _startRemoteListener.onRemoteStart($code);
+       }
+       Bundle bundle = new Bundle();
+       bundle.putString("ADDRESS", $address);
+       Log.e("address",$address);
+       bundle.putInt("CODE", $code);
+       fragment.setArguments(bundle);
        FragmentManager fm = getFragmentManager();
        FragmentTransaction ft = fm.beginTransaction();
        ft.replace(R.id.layout_main, fragment);
@@ -141,123 +145,21 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
         }
     };
 
-    private class ConnectThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
-        int code;
-
-        public ConnectThread(int code, BluetoothDevice device) {
-            // Use a temporary object that is later assigned to mmSocket,
-            // because mmSocket is final
-            BluetoothSocket tmp = null;
-            mmDevice = device;
-            this.code = code;
-
-            // Get a BluetoothSocket to connect with the given BluetoothDevice
-            try {
-                // MY_UUID is the app's UUID string, also used by the server code
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-            } catch (IOException e) { }
-            mmSocket = tmp;
-        }
-
-        public void run() {
-            // Cancel discovery because it will slow down the connection
-            mBluetoothAdapter.cancelDiscovery();
-
-            try {
-                // Connect the device through the socket. This will block
-                // until it succeeds or throws an exception
-                mmSocket.connect();
-            } catch (IOException connectException) {
-                // Unable to connect; close the socket and get out
-                try {
-                    mmSocket.close();
-                } catch (IOException closeException) { }
-                return;
-            }
-
-            // Do work to manage the connection (in a separate thread)
-            new ConnectedThread(code, mmSocket).start();
-        }
-
-        /** Will cancel an in-progress connection, and close the socket */
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) { }
-        }
-    }
-
-    private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
-        int code;
-
-        public ConnectedThread(int code, BluetoothSocket socket) {
-            mmSocket = socket;
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
-            this.code = code;
-            // Get the input and output streams, using temp objects because
-            // member streams are final
-            try {
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
-
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
-        }
-
-        public void run() {
-            byte[] buffer = new byte[1024];  // buffer store for the stream
-            int bytes; // bytes returned from read()
-
-            // Keep listening to the InputStream until an exception occurs
-            while (true) {
-                try {
-                    // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
-                    //code에 따른 처리방식 입력
-                    write(new String("abc").getBytes());
-                } catch (IOException e) {
-                    break;
-                }
-            }
-        }
-
-        /* Call this from the main activity to send data to the remote device */
-        public void write(byte[] bytes) {
-            try {
-                mmOutStream.write(bytes);
-            } catch (IOException e) { }
-        }
-
-        /* Call this from the main activity to shutdown the connection */
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) { }
-        }
-    }
-
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         SelectDialog dialog = (SelectDialog)dialogInterface;
-        startRemote(dialog.getRemote(), dialog.getDevice());
+        startRemote(dialog.getRemote(), dialog.getAddress());
     }
 
     private class SelectDialog extends Dialog implements View.OnClickListener {
 
         private OnDismissListener _listener;
         private int remote;
-        private BluetoothDevice _device;
+        private String _address;
 
-        public SelectDialog(@NonNull Context context, BluetoothDevice $device) {
+        public SelectDialog(@NonNull Context context, String $address) {
             super(context);
-            _device = $device;
+            _address = $address;
         }
 
         @Override
@@ -302,11 +204,17 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
             return remote;
         }
 
-        public BluetoothDevice getDevice() {
-            return _device;
+        public String getAddress() {
+            return _address;
         }
     }
 
+    public interface OnRemoteStartListener {
+        public void onRemoteStart(int $code);
+    }
 
+    void setOnRemoteStartListener(OnRemoteStartListener $listener) {
+        _startRemoteListener = $listener;
+    }
 
 }

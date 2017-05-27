@@ -1,5 +1,6 @@
 package younggun.aduinoremote;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
@@ -11,18 +12,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.OnRemoteStartListener {
 
     BluetoothAdapter mBluetoothAdapter;
-    MainFragment mainFragment;
+    Toolbar toolbar;
+    int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         init();
     }
 
@@ -42,7 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Fragment fragment;
+            switch (code) {
+                case 0 :fragment = new RobotSettingFragment(); break;
+                case 1 :fragment = new RobotSettingFragment(); break;
+                case 2 :fragment = new RobotSettingFragment(); break;
+                case 3 :fragment = new RobotSettingFragment(); break;
+                default:fragment = new RobotSettingFragment(); break;
+            }
+
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.addToBackStack(null);
+            ft.replace(R.id.layout_main, fragment);
+            ft.commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -60,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        mainFragment = new MainFragment();
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setOnRemoteStartListener(this);
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.layout_main, mainFragment);
@@ -73,5 +88,11 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "블루투스를 사용해야 합니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    public void onRemoteStart(int $code) {
+        code = $code;
+        toolbar.getMenu().findItem(R.id.action_settings).setVisible(true);
     }
 }
