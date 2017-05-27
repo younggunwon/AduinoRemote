@@ -2,6 +2,7 @@ package younggun.aduinoremote;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import java.io.IOException;
@@ -39,6 +40,9 @@ class ConnectedThread extends Thread {
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
 
+        Message msg = new Message();
+        msg.what = 2;
+        _handler.sendMessage(msg);
     }
 
 

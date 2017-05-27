@@ -12,9 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements MainFragment.OnRemoteStartListener {
 
-    BluetoothAdapter mBluetoothAdapter;
     Toolbar toolbar;
     int code;
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
     }
 
     void init() {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBluetoothAdapter == null) {
             Toast.makeText(MainActivity.this, "이 기기는 블루투스를 지원하지 않는 기기입니다.", Toast.LENGTH_SHORT).show();
             finish();
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
                 startActivityForResult(enableBtIntent, 100);
             }
         }
+        setDatabase();
 
         MainFragment mainFragment = new MainFragment();
         mainFragment.setOnRemoteStartListener(this);
@@ -94,5 +96,36 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
     public void onRemoteStart(int $code) {
         code = $code;
         toolbar.getMenu().findItem(R.id.action_settings).setVisible(true);
+    }
+
+    private void setDatabase() {
+        DBHelper dbHelper = new DBHelper(MainActivity.this, "Remote.db", null, 1);
+        ArrayList<String> dbList = dbHelper.getValue("ROBOT");
+        if(dbList.isEmpty()) {
+            dbHelper.insert("ROBOT", "outputUp", "u");
+            dbHelper.insert("ROBOT", "outputDown", "d");
+            dbHelper.insert("ROBOT", "outputLeft", "l");
+            dbHelper.insert("ROBOT", "outputRight", "r");
+            dbHelper.insert("ROBOT", "outputa", "a");
+            dbHelper.insert("ROBOT", "outputs", "s");
+            dbHelper.insert("ROBOT", "outputf", "f");
+            dbHelper.insert("ROBOT", "outputg", "g");
+
+            dbHelper.insert("CAR", "outputUp", "u");
+            dbHelper.insert("CAR", "outputDown", "d");
+            dbHelper.insert("CAR", "outputLeft", "l");
+            dbHelper.insert("CAR", "outputRight", "r");
+
+            dbHelper.insert("VARIOUS", "inputText0", "받은값1");
+            dbHelper.insert("VARIOUS", "inputText1", "받은값2");
+            dbHelper.insert("VARIOUS", "inputText2", "받은값3");
+
+            dbHelper.insert("VARIOUS", "buttonName0", "버튼1");
+            dbHelper.insert("VARIOUS", "buttonName1", "버튼2");
+            dbHelper.insert("VARIOUS", "buttonName2", "버튼3");
+            dbHelper.insert("VARIOUS", "buttonName3", "버튼4");
+            dbHelper.insert("VARIOUS", "buttonName4", "버튼5");
+            dbHelper.insert("VARIOUS", "buttonName5", "버튼6");
+        }
     }
 }

@@ -62,7 +62,6 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
    void findDevice() {
        if(mBluetoothAdapter.isDiscovering()) {
            mBluetoothAdapter.cancelDiscovery();
-           getActivity().unregisterReceiver(mReceiver);
        }
        IntentFilter filter = new IntentFilter();
        filter.addAction(BluetoothDevice.ACTION_FOUND);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * Created by LOVE on 2017-05-25.
@@ -20,8 +21,9 @@ import android.widget.ImageView;
 
 public class RobotFragment extends Fragment implements View.OnClickListener,ConnectThread.OnMakeListener{
 
-    ConnectedThread connectedThread;
+    ConnectedThread connectedThread = null;
     View v;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -41,9 +43,14 @@ public class RobotFragment extends Fragment implements View.OnClickListener,Conn
         Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0) {
-                    //메인UI 변경내용
+                if(msg.what == 0) { //메인UI 변경내용
                     //textView.setText((String)msg.getObj);
+                } else if(msg.what == 1) { //연결 에러
+                    getActivity().getFragmentManager().beginTransaction().remove(RobotFragment.this).commit();
+                    getActivity().getFragmentManager().popBackStack();
+                    Toast.makeText(getActivity(), "연결 실패, 기기 전원 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                } else if(msg.what == 2) { //연결 성공
+                    Toast.makeText(getActivity(), "연결 성공!", Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -107,7 +114,11 @@ public class RobotFragment extends Fragment implements View.OnClickListener,Conn
                 s = "what";
                 break;
         }
-        connectedThread.write(s.getBytes());
+        try {
+            connectedThread.write(s.getBytes());
+        } catch(NullPointerException e) {
+            Toast.makeText(getActivity(), "연결중입니다. 5초 후에 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -117,7 +128,7 @@ public class RobotFragment extends Fragment implements View.OnClickListener,Conn
 
     @Override
     public void onDestroy() {
-        connectedThread.cancel();
+        if(connectedThread != null) { connectedThread.cancel();}
         super.onDestroy();
     }
 }

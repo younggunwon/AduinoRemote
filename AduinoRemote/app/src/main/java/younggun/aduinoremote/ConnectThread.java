@@ -3,6 +3,7 @@ package younggun.aduinoremote;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import java.io.IOException;
 
@@ -48,17 +49,13 @@ public class ConnectThread extends Thread {
             mmSocket.connect();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and get out
+            Message msg = new Message();
+            msg.what = 1;
+            _handler.sendMessage(msg);
             try {
                 mmSocket.close();
             } catch (IOException closeException) { }
             return;
-        }
-
-        // Do work to manage the connection (in a separate thread)]
-        if(mmSocket.isConnected()) {
-            Log.e("connect","sucess");
-        } else {
-            Log.e("connect","fail");
         }
 
         ConnectedThread connectedThread = new ConnectedThread(mmSocket, _handler);
