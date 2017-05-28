@@ -51,6 +51,8 @@ public class RobotSettingFragment extends Fragment {
                     dbHelper.update("ROBOT", name[i], List.get(i).getOutput());
                     Log.e("String", List.get(i).getOutput());
                 }
+                getActivity().getFragmentManager().beginTransaction().remove(RobotSettingFragment.this).commit();
+                getActivity().getFragmentManager().popBackStack();
             }
         });
         v.findViewById(R.id.bt_cancel_robot).setOnClickListener(new View.OnClickListener() {
