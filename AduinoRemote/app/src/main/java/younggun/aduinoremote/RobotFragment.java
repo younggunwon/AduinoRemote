@@ -56,16 +56,18 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0) { //메인UI 변경내용
-                    //textView.setText((String)msg.getObj);
-                } else if(msg.what == 1) { //연결 실패
-                    getActivity().getFragmentManager().beginTransaction().remove(RobotFragment.this).commit();
-                    getActivity().getFragmentManager().popBackStack();
-                    Toast.makeText(getActivity(), "연결 실패, 기기 전원 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
-                } else if(msg.what == 2) { //연결 성공
-                    Toast.makeText(getActivity(), "연결 성공!", Toast.LENGTH_SHORT).show();
-                } else if(msg.what == 3) { //연결 에러
-                    Toast.makeText(getActivity(), "연결중입니다. 잠시 후에 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+                if(!(getActivity() == null)) {
+                    if (msg.what == 0) { //메인UI 변경내용
+                        //textView.setText((String)msg.getObj);
+                    } else if (msg.what == 1) { //연결 실패
+                        getActivity().getFragmentManager().beginTransaction().remove(RobotFragment.this).commit();
+                        getActivity().getFragmentManager().popBackStack();
+                        Toast.makeText(getActivity(), "연결 실패, 기기 전원 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                    } else if (msg.what == 2) { //연결 성공
+                        Toast.makeText(getActivity(), "연결 성공!", Toast.LENGTH_SHORT).show();
+                    } else if (msg.what == 3) { //연결 에러
+                        Toast.makeText(getActivity(), "연결중입니다. 잠시 후에 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         };
