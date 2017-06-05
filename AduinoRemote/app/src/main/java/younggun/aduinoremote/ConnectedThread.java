@@ -57,36 +57,79 @@ public class ConnectedThread extends Thread {
         // Keep listening to the InputStream until an exception occurs
         while (useRead) {
             try {
-                // Read from the InputStream
-                bytes = mmInStream.read(buffer);
+                String s = "";
+                while(mmInStream.available() > 0) {
+                    char c = (char)mmInStream.read();
+                    s += c;
+                    try {
+                        sleep(5);
+                    } catch (Exception e) {
+
+                    }
+                }
                 Message msg = _handler.obtainMessage();
-                String s = new String(buffer);
                 if(s.equals("speed")) {
-                    bytes = mmInStream.read(buffer);
-                    s = new String(buffer);
+                    while(mmInStream.available() > 0) {
+                        char c = (char)mmInStream.read();
+                        s += c;
+                        try {
+                            sleep(5);
+                        } catch (Exception e) {
+
+                        }
+                    }
                     msg.what = 10;
                 } else if(s.equals("temper")) {
-                    bytes = mmInStream.read(buffer);
-                    s = new String(buffer);
+                    while(mmInStream.available() > 0) {
+                        char c = (char)mmInStream.read();
+                        s += c;
+                        try {
+                            sleep(5);
+                        } catch (Exception e) {
+
+                        }
+                    }
                     msg.what = 11;
                 } else if(s.equals("humi")) {
-                    bytes = mmInStream.read(buffer);
-                    s = new String(buffer);
+                    while(mmInStream.available() > 0) {
+                        char c = (char)mmInStream.read();
+                        s += c;
+                        try {
+                            sleep(5);
+                        } catch (Exception e) {
+
+                        }
+                    }
                     msg.what = 12;
                 } else if(s.equals("left")) {
-                    bytes = mmInStream.read(buffer);
-                    s = new String(buffer);
+                    while(mmInStream.available() > 0) {
+                        char c = (char)mmInStream.read();
+                        s += c;
+                        try {
+                            sleep(5);
+                        } catch (Exception e) {
+
+                        }
+                    }
                     msg.what = 13;
                 } else if(s.equals("right")) {
-                    bytes = mmInStream.read(buffer);
-                    s = new String(buffer);
+                    while(mmInStream.available() > 0) {
+                        char c = (char)mmInStream.read();
+                        s += c;
+                        try {
+                            sleep(5);
+                        } catch (Exception e) {
+
+                        }
+                    }
                     msg.what = 14;
                 } else {
                     msg.what = 100;
                 }
+                Log.e("take",s);
                 msg.obj = s;
                 _handler.sendMessage(msg);
-                write(new String("abc").getBytes());
+                write(s.getBytes());
             } catch (IOException e) {
                 break;
             }
@@ -95,7 +138,7 @@ public class ConnectedThread extends Thread {
 
     /* Call this from the main activity to send data to the remote device */
     public void write(byte[] bytes) {
-        Log.e("connectThread","write");
+        Log.e("write","write");
         try {
             mmOutStream.write(bytes);
         } catch (IOException e) { }
