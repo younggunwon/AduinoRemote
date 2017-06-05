@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import younggun.aduinoremote.DBHelper;
 import younggun.aduinoremote.R;
@@ -49,6 +50,37 @@ public class VariousFragment extends RobotFragment implements View.OnClickListen
                     s = "nouse";
                 }
                 connectedThread.write(s.getBytes());
+                break;
+        }
+    }
+
+    @Override
+    void drawValue(int code, String s) {
+        Log.e("drawValue", Integer.toString(code) + "/" + s);
+        int value = 0;
+        try {
+            value = (int) Double.parseDouble(s);
+            if (value < 10 && code != 10) {
+                return;
+            }
+        } catch (Exception e) {
+            return;
+        }
+            switch (code) {
+            case 10:
+                ((TextView)v.findViewById(R.id.tv_speed)).setText(value + "km/h");
+                break;
+            case 11:
+                ((TextView)v.findViewById(R.id.tv_temper)).setText(value + "℃");
+                break;
+            case 12:
+                ((TextView)v.findViewById(R.id.tv_humi)).setText(value + "%");
+                break;
+            case 13:
+                ((TextView)v.findViewById(R.id.tv_left)).setText(value + "cm");
+                break;
+            case 14:
+                ((TextView)v.findViewById(R.id.tv_right)).setText(value + "cm");
                 break;
         }
     }

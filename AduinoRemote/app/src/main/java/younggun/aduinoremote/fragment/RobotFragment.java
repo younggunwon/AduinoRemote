@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -71,6 +70,7 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
                     } else if (msg.what == 3) { //연결 에러
                         Toast.makeText(getActivity(), "연결중입니다. 잠시 후에 다시 시도하세요.", Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.e("set","start");
                         drawValue(msg.what, (String)msg.obj);
                     }
                 }
@@ -84,24 +84,9 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
     }
 
     void drawValue(int code, String s) {
-        switch (code) {
-            case 10:
-                ((TextView)v.findViewById(R.id.tv_speed)).setText(s + "km/h");
-                break;
-            case 11:
-                ((TextView)v.findViewById(R.id.tv_temper)).setText(s + "℃");
-                break;
-            case 12:
-                ((TextView)v.findViewById(R.id.tv_humi)).setText(s + "%");
-                break;
-            case 13:
-                ((TextView)v.findViewById(R.id.tv_left)).setText(s + "cm");
-                break;
-            case 14:
-                ((TextView)v.findViewById(R.id.tv_right)).setText(s + "cm");
-                break;
-        }
+
     }
+
 
     void init(View v) {
         Log.e("RobotFragment","init");
@@ -192,6 +177,7 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
         @Override
         public void run()
         {
+            Log.e("touchEvent","start");
             super.run();
 
             while (_isBtDown)

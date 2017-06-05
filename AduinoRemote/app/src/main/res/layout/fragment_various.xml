@@ -46,8 +46,8 @@
                 android:id="@+id/tv_speed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="20km/h"
-                android:textSize="25sp"
+                android:text="0km/h"
+                android:textSize="20sp"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -68,8 +68,8 @@
                 android:id="@+id/tv_temper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="30℃"
-                android:textSize="25sp"
+                android:text="0℃"
+                android:textSize="20sp"
                 android:gravity="center"/>
         </LinearLayout>
 
@@ -90,8 +90,8 @@
                 android:id="@+id/tv_humi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="60%"
-                android:textSize="25sp"
+                android:text="0%"
+                android:textSize="20sp"
                 android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
@@ -118,7 +118,7 @@
                 android:id="@+id/tv_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="30cm"
+                android:text="0cm"
                 android:textSize="25sp"
                 android:gravity="center"
                 android:layout_marginBottom="40dp"/>
@@ -141,7 +141,7 @@
                 android:id="@+id/tv_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="40cm"
+                android:text="0cm"
                 android:textSize="25sp"
                 android:gravity="center"/>
         </LinearLayout>
@@ -150,7 +150,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:text="1.브레이크 자동 모드 사용 시 시속 10km 이상이 되면 자동으로 브레이크가 잡힙니다.\n2.브레이크 자동 모드 사용 시 50cm 이내에 물체가 감지되면 자동으로 브레이크가 잡힙니다.\n3.온도는 20~24도가 적정 온도입니다.\n4.습도는 40~60%가 적정 습도입니다."/>
 
 </LinearLayout>
