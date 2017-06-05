@@ -17,7 +17,7 @@
         android:src="@drawable/select_car"
         android:scaleType="fitXY"/>
     <ImageView
-        android:id="@+id/iv_select_button"
+        android:id="@+id/iv_select_various"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:src="@drawable/select_button"

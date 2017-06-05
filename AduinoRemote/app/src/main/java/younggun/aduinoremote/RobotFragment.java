@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static younggun.aduinoremote.R.id.toolbar;
+
 /**
  * Created by LOVE on 2017-05-25.
  */
@@ -25,29 +27,25 @@ import java.util.ArrayList;
 public class RobotFragment extends Fragment implements ConnectThread.OnMakeListener,View.OnTouchListener{
 
     ConnectedThread connectedThread = null;
-    View v;
-    String outputData[] = new String[8];
+
     boolean _isBtDown;
     Handler handler;
+    ArrayList<String> list;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        if(v == null) {
-            v = inflater.inflate(R.layout.fragment_robot, container, false);
-            init();
-            startConnect();
-        }
-        DBHelper dbHelper = new DBHelper(getActivity(), "Remote.db", null, 1);
-        ArrayList<String> list = dbHelper.getValue("ROBOT");
-        for(int i = 0; i < list.size(); i++) {
-            outputData[i] = list.get(i);
+        View v = inflater.inflate(R.layout.fragment_robot, container, false);
+        if(list == null) {
+            init(v);
+            startConnect(this, false);
+            DBHelper dbHelper = new DBHelper(getActivity(), "Remote.db", null, 1);
+            list = dbHelper.getValue("ROBOT");
         }
         return v;
     }
 
-    void startConnect() {
-        Log.e("RobotFragment","setConnect");
+    void startConnect(final Fragment f, boolean useRead) {
         Bundle bundle = getArguments();
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice mDevice = mBluetoothAdapter.getRemoteDevice(bundle.getString("ADDRESS"));
@@ -60,7 +58,7 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
                     if (msg.what == 0) { //메인UI 변경내용
                         //textView.setText((String)msg.getObj);
                     } else if (msg.what == 1) { //연결 실패
-                        getActivity().getFragmentManager().beginTransaction().remove(RobotFragment.this).commit();
+                        getActivity().getFragmentManager().beginTransaction().remove(f).commit();
                         getActivity().getFragmentManager().popBackStack();
                         Toast.makeText(getActivity(), "연결 실패, 기기 전원 상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
                     } else if (msg.what == 2) { //연결 성공
@@ -73,12 +71,12 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
         };
 
         mBluetoothAdapter.cancelDiscovery();
-        ConnectThread ct = new ConnectThread(mDevice, handler);
+        ConnectThread ct = new ConnectThread(mDevice, handler, useRead);
         ct.setOnMakeListener(this);
         ct.start();
     }
 
-    void init() {
+    void init(View v) {
         Log.e("RobotFragment","init");
         ImageButton ib_up = (ImageButton)v.findViewById(R.id.ib_up);
         ImageButton ib_down = (ImageButton)v.findViewById(R.id.ib_down);
@@ -106,28 +104,28 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
                 _isBtDown = true;
                 switch(view.getId()) {
                     case R.id.ib_up:
-                        s = outputData[0];
+                        s = list.get(0);
                         break;
                     case R.id.ib_down:
-                        s = outputData[1];
+                        s = list.get(1);
                         break;
                     case R.id.ib_left:
-                        s = outputData[2];
+                        s = list.get(2);
                         break;
                     case R.id.ib_right:
-                        s = outputData[3];
+                        s = list.get(3);
                         break;
                     case R.id.iv_a:
-                        s = outputData[4];
+                        s = list.get(4);
                         break;
                     case R.id.iv_s:
-                        s = outputData[5];
+                        s = list.get(5);
                         break;
                     case R.id.iv_f:
-                        s = outputData[6];
+                        s = list.get(6);
                         break;
                     case R.id.iv_g:
-                        s = outputData[7];
+                        s = list.get(7);
                         break;
                     default:
                         s = "what";
@@ -140,7 +138,7 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
                 _isBtDown = false;
                 break;
         }
-        return false;
+        return true;
     }
 
     @Override

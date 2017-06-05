@@ -19,8 +19,9 @@ public class ConnectThread extends Thread {
     ConnectedThread connectedThread;
     Handler _handler;
     OnMakeListener onMakeListener;
+    boolean useRead;
 
-    public ConnectThread(BluetoothDevice device, Handler $handler) {
+    public ConnectThread(BluetoothDevice device, Handler $handler, boolean $useRead) {
         Log.e("connectThread","make");
         Log.e("connectThread",device.getAddress());
         // Use a temporary object that is later assigned to mmSocket,
@@ -28,6 +29,7 @@ public class ConnectThread extends Thread {
         BluetoothSocket tmp = null;
         mmDevice = device;
         _handler = $handler;
+        useRead = $useRead;
 
         // Get a BluetoothSocket to connect with the given BluetoothDevice
         try {
@@ -58,7 +60,7 @@ public class ConnectThread extends Thread {
             return;
         }
 
-        ConnectedThread connectedThread = new ConnectedThread(mmSocket, _handler);
+        ConnectedThread connectedThread = new ConnectedThread(mmSocket, _handler, useRead);
         if(_handler == null) {
         } else {
             connectedThread.start();

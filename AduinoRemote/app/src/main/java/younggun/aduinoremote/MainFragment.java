@@ -104,7 +104,7 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
        Fragment fragment;
        switch ($code) {
            case 0 :fragment = new RobotFragment(); break;
-           case 1 :fragment = new RobotFragment(); break;
+           case 1 :fragment = new CarFragment(); break;
            case 2 :fragment = new RobotFragment(); break;
            case 3 :fragment = new RobotFragment(); break;
            default:fragment = new RobotFragment(); break;
@@ -168,21 +168,21 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
             setContentView(R.layout.dialog_select);
             findViewById(R.id.iv_select_robot).setOnClickListener(this);
             findViewById(R.id.iv_select_car).setOnClickListener(this);
-            findViewById(R.id.iv_select_button).setOnClickListener(this);
+            findViewById(R.id.iv_select_various).setOnClickListener(this);
             findViewById(R.id.iv_select_chat).setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
 
-            switch(v.getId()) {
+            switch(view.getId()) {
                 case R.id.iv_select_robot :
                     remote = 0;
                     break;
                 case R.id.iv_select_car :
                     remote = 1;
                     break;
-                case R.id.iv_select_button :
+                case R.id.iv_select_various :
                     remote = 2;
                     break;
                 case R.id.iv_select_chat :

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
             Fragment fragment;
             switch (code) {
                 case 0 :fragment = new RobotSettingFragment(); break;
-                case 1 :fragment = new RobotSettingFragment(); break;
+                case 1 :fragment = new CarSettingFragment(); break;
                 case 2 :fragment = new RobotSettingFragment(); break;
                 case 3 :fragment = new RobotSettingFragment(); break;
                 default:fragment = new RobotSettingFragment(); break;

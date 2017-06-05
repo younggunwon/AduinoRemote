@@ -18,11 +18,13 @@ class ConnectedThread extends Thread {
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
     Handler _handler;
+    boolean useRead;
 
-    public ConnectedThread(BluetoothSocket socket,Handler $hanler) {
+    public ConnectedThread(BluetoothSocket socket,Handler $hanler ,boolean $useRead) {
         Log.e("connectedThread","make");
         mmSocket = socket;
         _handler = $hanler;
+        useRead = $useRead;
         if(mmSocket.isConnected()) {
             Log.e("connected","sucess");
         } else {
@@ -53,7 +55,7 @@ class ConnectedThread extends Thread {
         int bytes; // bytes returned from read()
 
         // Keep listening to the InputStream until an exception occurs
-        while (true) {
+        while (useRead) {
             try {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
