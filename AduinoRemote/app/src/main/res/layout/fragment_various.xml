@@ -1,40 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="브레이크 자동모드"
+            android:textSize="30sp"
+            android:paddingEnd="20dp"/>
+
+        <Switch
+            android:id="@+id/switch_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="속도"
+                android:textSize="30sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="20km/h"
+                android:textSize="25sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="온도"
+                android:textSize="30sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_temper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30℃"
+                android:textSize="25sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="습도"
+                android:textSize="30sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_humi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="60%"
+                android:textSize="25sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="왼쪽에서 접근하는 물체"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30cm"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:layout_marginBottom="40dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오른쪽에서 접근하는 물체"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="40cm"
+                android:textSize="25sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="53dp"
-        android:id="@+id/textView" />
+        android:textSize="20sp"
+        android:text="1.브레이크 자동 모드 사용 시 시속 10km 이상이 되면 자동으로 브레이크가 잡힙니다.\n2.브레이크 자동 모드 사용 시 50cm 이내에 물체가 감지되면 자동으로 브레이크가 잡힙니다.\n3.온도는 20~24도가 적정 온도입니다.\n4.습도는 40~60%가 적정 습도입니다."/>
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:id="@+id/textView2" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView3" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3"
-        android:id="@+id/textView4"
-        android:padding="20dp"/>
-</RelativeLayout>
+</LinearLayout>

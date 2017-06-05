@@ -120,9 +120,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
             dbHelper.insert("CAR", "outputLeft", "l");
             dbHelper.insert("CAR", "outputRight", "r");
 
-            dbHelper.insert("VARIOUS", "inputText0", "받은값1");
-            dbHelper.insert("VARIOUS", "inputText1", "받은값2");
-            dbHelper.insert("VARIOUS", "inputText2", "받은값3");
+            dbHelper.insert("VARIOUS", "inputName0", "속도1");
+            dbHelper.insert("VARIOUS", "inputName1", "속도2");
+            dbHelper.insert("VARIOUS", "inputName2", "속도3");
+
+            dbHelper.insert("VARIOUS", "inputText0", "speed1");
+            dbHelper.insert("VARIOUS", "inputText1", "speed2");
+            dbHelper.insert("VARIOUS", "inputText2", "speed3");
 
             dbHelper.insert("VARIOUS", "buttonName0", "버튼1");
             dbHelper.insert("VARIOUS", "buttonName1", "버튼2");
@@ -130,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnRe
             dbHelper.insert("VARIOUS", "buttonName3", "버튼4");
             dbHelper.insert("VARIOUS", "buttonName4", "버튼5");
             dbHelper.insert("VARIOUS", "buttonName5", "버튼6");
+
+            dbHelper.insert("VARIOUS", "buttonValue0", "a");
+            dbHelper.insert("VARIOUS", "buttonValue1", "b");
+            dbHelper.insert("VARIOUS", "buttonValue2", "c");
+            dbHelper.insert("VARIOUS", "buttonValue3", "d");
+            dbHelper.insert("VARIOUS", "buttonValue4", "e");
+            dbHelper.insert("VARIOUS", "buttonValue5", "f");
         }
     }
 }

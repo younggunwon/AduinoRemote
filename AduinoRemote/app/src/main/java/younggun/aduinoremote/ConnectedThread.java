@@ -59,11 +59,33 @@ public class ConnectedThread extends Thread {
             try {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
-               /* String s = new String(buffer);
                 Message msg = _handler.obtainMessage();
-                msg.what = 0;
+                String s = new String(buffer);
+                if(s.equals("speed")) {
+                    bytes = mmInStream.read(buffer);
+                    s = new String(buffer);
+                    msg.what = 10;
+                } else if(s.equals("temper")) {
+                    bytes = mmInStream.read(buffer);
+                    s = new String(buffer);
+                    msg.what = 11;
+                } else if(s.equals("humi")) {
+                    bytes = mmInStream.read(buffer);
+                    s = new String(buffer);
+                    msg.what = 12;
+                } else if(s.equals("left")) {
+                    bytes = mmInStream.read(buffer);
+                    s = new String(buffer);
+                    msg.what = 13;
+                } else if(s.equals("right")) {
+                    bytes = mmInStream.read(buffer);
+                    s = new String(buffer);
+                    msg.what = 14;
+                } else {
+                    msg.what = 100;
+                }
                 msg.obj = s;
-                _handler.sendMessage(msg);*/
+                _handler.sendMessage(msg);
                 write(new String("abc").getBytes());
             } catch (IOException e) {
                 break;

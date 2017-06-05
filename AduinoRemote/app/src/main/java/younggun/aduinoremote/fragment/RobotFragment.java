@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,11 +35,12 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
     boolean _isBtDown;
     Handler handler;
     ArrayList<String> list;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_robot, container, false);
+        v = inflater.inflate(R.layout.fragment_robot, container, false);
         if(list == null) {
             init(v);
             startConnect(this, false);
@@ -68,6 +70,8 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
                         Toast.makeText(getActivity(), "연결 성공!", Toast.LENGTH_SHORT).show();
                     } else if (msg.what == 3) { //연결 에러
                         Toast.makeText(getActivity(), "연결중입니다. 잠시 후에 다시 시도하세요.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        drawValue(msg.what, (String)msg.obj);
                     }
                 }
             }
@@ -77,6 +81,26 @@ public class RobotFragment extends Fragment implements ConnectThread.OnMakeListe
         ConnectThread ct = new ConnectThread(mDevice, handler, useRead);
         ct.setOnMakeListener(this);
         ct.start();
+    }
+
+    void drawValue(int code, String s) {
+        switch (code) {
+            case 10:
+                ((TextView)v.findViewById(R.id.tv_speed)).setText(s + "km/h");
+                break;
+            case 11:
+                ((TextView)v.findViewById(R.id.tv_temper)).setText(s + "℃");
+                break;
+            case 12:
+                ((TextView)v.findViewById(R.id.tv_humi)).setText(s + "%");
+                break;
+            case 13:
+                ((TextView)v.findViewById(R.id.tv_left)).setText(s + "cm");
+                break;
+            case 14:
+                ((TextView)v.findViewById(R.id.tv_right)).setText(s + "cm");
+                break;
+        }
     }
 
     void init(View v) {

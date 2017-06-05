@@ -107,7 +107,7 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
        switch ($code) {
            case 0 :fragment = new RobotFragment(); break;
            case 1 :fragment = new CarFragment(); break;
-           case 2 :fragment = new RobotFragment(); break;
+           case 2 :fragment = new VariousFragment(); break;
            case 3 :fragment = new RobotFragment(); break;
            default:fragment = new RobotFragment(); break;
        }
