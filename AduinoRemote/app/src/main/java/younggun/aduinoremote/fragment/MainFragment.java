@@ -1,4 +1,4 @@
-package younggun.aduinoremote;
+package younggun.aduinoremote.fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import java.util.Set;
 import java.util.UUID;
+
+import younggun.aduinoremote.R;
 
 /**
  * Created by LOVE on 2017-05-23.
@@ -212,7 +214,7 @@ public class MainFragment extends Fragment implements DialogInterface.OnDismissL
         public void onRemoteStart(int $code);
     }
 
-    void setOnRemoteStartListener(OnRemoteStartListener $listener) {
+    public void setOnRemoteStartListener(OnRemoteStartListener $listener) {
         _startRemoteListener = $listener;
     }
 

@@ -13,7 +13,7 @@ import java.io.OutputStream;
  * Created by LOVE on 2017-05-27.
  */
 
-class ConnectedThread extends Thread {
+public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;

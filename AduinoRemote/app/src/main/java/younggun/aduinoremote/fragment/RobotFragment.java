@@ -1,4 +1,4 @@
-package younggun.aduinoremote;
+package younggun.aduinoremote.fragment;
 
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static younggun.aduinoremote.R.id.toolbar;
+import younggun.aduinoremote.ConnectThread;
+import younggun.aduinoremote.ConnectedThread;
+import younggun.aduinoremote.DBHelper;
+import younggun.aduinoremote.R;
 
 /**
  * Created by LOVE on 2017-05-25.

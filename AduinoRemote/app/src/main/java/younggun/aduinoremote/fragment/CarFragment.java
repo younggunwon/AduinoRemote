@@ -1,4 +1,4 @@
-package younggun.aduinoremote;
+package younggun.aduinoremote.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import younggun.aduinoremote.DBHelper;
+import younggun.aduinoremote.R;
 
 /**
  * Created by 219 on 2017-06-05.

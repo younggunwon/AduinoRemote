@@ -7,7 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import java.io.IOException;
 
-import static younggun.aduinoremote.MainFragment.MY_UUID;
+import static younggun.aduinoremote.fragment.MainFragment.MY_UUID;
 
 /**
  * Created by LOVE on 2017-05-27.
@@ -77,7 +77,7 @@ public class ConnectThread extends Thread {
         } catch (IOException e) { }
     }
 
-    void setOnMakeListener(OnMakeListener $onMakeListener) {
+    public void setOnMakeListener(OnMakeListener $onMakeListener) {
         onMakeListener = $onMakeListener;
     }
 

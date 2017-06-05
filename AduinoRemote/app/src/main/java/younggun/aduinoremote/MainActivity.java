@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import younggun.aduinoremote.fragment.CarSettingFragment;
+import younggun.aduinoremote.fragment.MainFragment;
+import younggun.aduinoremote.fragment.RobotSettingFragment;
+
 public class MainActivity extends AppCompatActivity implements MainFragment.OnRemoteStartListener {
 
     Toolbar toolbar;
