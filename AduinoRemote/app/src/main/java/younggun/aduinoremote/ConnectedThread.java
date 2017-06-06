@@ -57,45 +57,65 @@ public class ConnectedThread extends Thread {
         // Keep listening to the InputStream until an exception occurs
         while (useRead) {
             try {
-                if (mmInStream.available() > 1) {
-                    sleep(10);
-                    //bytes = mmInStream.read(buffer);
-                    char c = (char)mmInStream.read();
+                if(mmInStream.available() > 0) {
+                    String s = "";
+                    String sv = "";
+                    while(mmInStream.available() > 0 || s.length() < 2) {
+                        char c = (char) mmInStream.read();
+                        s += c;
+                        sleep(5);
+                    }
+                    while(mmInStream.available() == 0) { };
                     Message msg = _handler.obtainMessage();
-                    //String s = new String(buffer, 0, bytes);
-                    String s;
-                    sleep(10);
-                    if (c == 's') {
-                        bytes = mmInStream.read(buffer);
-                        s = new String(buffer, 0, bytes);
+                    if (s.equals("speed")) {
+                        while(mmInStream.available() > 0 || sv.length() < 2) {
+                            char c = (char) mmInStream.read();
+                            sv += c;
+                            sleep(5);
+                        }
                         msg.what = 10;
-                    } else if (c == 't') {
-                        bytes = mmInStream.read(buffer);
-                        s = new String(buffer, 0, bytes);
+                    } else if (s.equals("temper")) {
+                        while(mmInStream.available() > 0 || sv.length() < 2) {
+                            char c = (char) mmInStream.read();
+                            sv += c;
+                            sleep(5);
+                        }
                         msg.what = 11;
-                    } else if (c == 'h') {
-                        bytes = mmInStream.read(buffer);
-                        s = new String(buffer, 0, bytes);
+                    } else if (s.equals("humi")) {
+                        while(mmInStream.available() > 0 || sv.length() < 2) {
+                            char c = (char) mmInStream.read();
+                            sv += c;
+                            sleep(5);
+                        }
                         msg.what = 12;
-                    } else if (c == 'l') {
-                        bytes = mmInStream.read(buffer);
-                        s = new String(buffer, 0, bytes);
+                    } else if (s.equals("left")) {
+                        while(mmInStream.available() > 0 || sv.length() < 2) {
+                            char c = (char) mmInStream.read();
+                            sv += c;
+                            sleep(5);
+                        }
                         msg.what = 13;
-                    } else if (c == 'r') {
-                        bytes = mmInStream.read(buffer);
-                        s = new String(buffer, 0, bytes);
+                    } else if (s.equals("right")) {
+                        while(mmInStream.available() > 0 || sv.length() < 2) {
+                            char c = (char) mmInStream.read();
+                            sv += c;
+                            sleep(5);
+                        }
                         msg.what = 14;
                     } else {
                         msg.what = 100;
-                        s = "";
+                        sv = "";
                     }
-                    Log.e("take", c + "/" + s);
+                    Log.e("take", s + "/" + sv);
                     if(msg.what != 100) {
-                        msg.obj = s;
+                        msg.obj = sv;
                         _handler.sendMessage(msg);
                         write(s.getBytes());
                     }
                 }
+
+
+
             } catch (IOException e) {
                 break;
             } catch (InterruptedException e) {
