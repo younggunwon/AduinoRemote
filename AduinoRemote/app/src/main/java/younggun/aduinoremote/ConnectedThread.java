@@ -110,7 +110,7 @@ public class ConnectedThread extends Thread {
                     if(msg.what != 100) {
                         msg.obj = sv;
                         _handler.sendMessage(msg);
-                        write(s.getBytes());
+                        //write(s.getBytes());
                     }
                 }
 

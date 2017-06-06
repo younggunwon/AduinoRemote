@@ -36,7 +36,9 @@ public class VariousFragment extends RobotFragment implements View.OnClickListen
 
     @Override
     void init(View v) {
-        ((Switch)v.findViewById(R.id.switch_use)).setOnClickListener(this);
+        v.findViewById(R.id.switch_use).setOnClickListener(this);
+        v.findViewById(R.id.bt_startBreak).setOnClickListener(this);
+        v.findViewById(R.id.bt_endBreak).setOnClickListener(this);
     }
 
     @Override
@@ -50,6 +52,13 @@ public class VariousFragment extends RobotFragment implements View.OnClickListen
                     s = "nouse";
                 }
                 connectedThread.write(s.getBytes());
+                break;
+
+            case R.id.bt_startBreak:
+                connectedThread.write(new String("breakOn").getBytes());
+                break;
+            case R.id.bt_endBreak:
+                connectedThread.write(new String("breakOff").getBytes());
                 break;
         }
     }
@@ -68,7 +77,7 @@ public class VariousFragment extends RobotFragment implements View.OnClickListen
         }
             switch (code) {
             case 10:
-                ((TextView)v.findViewById(R.id.tv_speed)).setText(value + "km/h");
+                ((TextView)v.findViewById(R.id.tv_speed)).setText(value + "m/h");
                 break;
             case 11:
                 ((TextView)v.findViewById(R.id.tv_temper)).setText(value + "℃");
