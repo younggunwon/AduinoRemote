@@ -34,10 +34,10 @@ public class RobotSettingFragment extends Fragment {
         settingList.add(new SettingData(R.drawable.down, dbList.get(1)));
         settingList.add(new SettingData(R.drawable.left, dbList.get(2)));
         settingList.add(new SettingData(R.drawable.right, dbList.get(3)));
-        settingList.add(new SettingData(R.drawable.a, dbList.get(4)));
-        settingList.add(new SettingData(R.drawable.s, dbList.get(5)));
-        settingList.add(new SettingData(R.drawable.f, dbList.get(6)));
-        settingList.add(new SettingData(R.drawable.g, dbList.get(7)));
+        settingList.add(new SettingData(R.drawable.aa, dbList.get(4)));
+        settingList.add(new SettingData(R.drawable.ss, dbList.get(5)));
+        settingList.add(new SettingData(R.drawable.ff, dbList.get(6)));
+        settingList.add(new SettingData(R.drawable.gg, dbList.get(7)));
         final MyAdapter myAdapter = new MyAdapter(getActivity(), settingList);
         ListView lv_setting_robot = (ListView)v.findViewById(R.id.lv_setting_robot);
         lv_setting_robot.setAdapter(myAdapter);

@@ -35,11 +35,10 @@ public class SRFragment extends RobotFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.e("SRFragment","start");
-        v = inflater.inflate(R.layout.fragment_sr, container, false);
-        if(list == null) {
-            DBHelper dbHelper = new DBHelper(getActivity(), "Remote.db", null, 1);
-            list = dbHelper.getValue("SR");
-
+        DBHelper dbHelper = new DBHelper(getActivity(), "Remote.db", null, 1);
+        list = dbHelper.getValue("SR");
+        if(v == null) {
+            v = inflater.inflate(R.layout.fragment_sr, container, false);
             Log.e("SRFragment","startConnect");
             startConnect(this, true, list);
         } else {
